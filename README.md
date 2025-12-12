@@ -1,59 +1,79 @@
 # OdettAngular
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.1.
+## Class1
 
-## Development server
+### Component
 
-To start a local development server, run:
+Angular Komponensek és Signal-ek
+Lépésenkénti Felépítés (90 perces óra)
+1. lépés: Mi az a komponens? (10 perc)
 
-```bash
-ng serve
-```
+Analógia: LEGO kockák → minden komponens egy építőelem
+Egy komponens = UI darab + logika
+Példa: gombok, kártyák, listák a weboldalon
+Cél: Megérteni, hogy miért jobb kisebb darabokból építkezni
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+2. lépés: Az első komponens létrehozása (15 perc)
 
-## Code scaffolding
+ng generate component greeting parancs
+Mi jön létre? (4 fájl)
+A @Component dekorátor megismerése
+Gyakorlat: Saját komponens létrehozása CLI-vel
+Cél: Megtapasztalni a komponens alapstruktúráját
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+3. lépés: Template és interpoláció (10 perc)
 
-```bash
-ng generate component component-name
-```
+HTML template írása
+{{ }} - adatok megjelenítése
+Property binding: [property]="value"
+Gyakorlat: Név és életkor megjelenítése
+Cél: Adatok összekapcsolása a template-tel
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+4. lépés: Event handling - kattintás (10 perc)
 
-```bash
-ng generate --help
-```
+(click)="method()" szintaxis
+Metódus írása a komponens osztályban
+Gyakorlat: Gomb ami számol (count++)
+Cél: Interakció megértése
+Probléma bevezetése: "Miért nem frissül automatikusan?"
 
-## Building
+### Signal
 
-To build the project run:
+5. lépés: Signal bevezetése - reaktivitás (15 perc)
 
-```bash
-ng build
-```
+Mi a probléma a sima változókkal?
+signal() importálása és létrehozása
+Signal olvasása: count() - mint függvény!
+Signal írása: count.set() és count.update()
+Gyakorlat: Számláló átírása signal-re
+Cél: Megérteni, hogy a signal miért "reaktív"
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+6. lépés: Computed signal - kalkulált értékek (10 perc)
 
-## Running unit tests
+computed() - automatikusan frissülő értékek
+Példa: doubled = computed(() => count() * 2)
+Gyakorlat: Számláló + duplázott érték megjelenítése
+Cél: Látni, hogy a computed automatikusan követi a változásokat
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+7. lépés: Lista kezelés signal-ekkel (15 perc)
 
-```bash
-ng test
-```
+Tömb tárolása signal-ben: items = signal<string[]>([])
+update() metódus használata tömbhöz
+@for új Angular szintaxis
+Gyakorlat: Egyszerű lista hozzáadással
+Cél: Signal használata összetettebb adatokkal
 
-## Running end-to-end tests
+8. lépés: Mini projekt - TODO lista (10 perc)
 
-For end-to-end (e2e) testing, run:
+Eddig tanultak kombinálása
+Input mező + gomb + lista
+Hozzáadás + törlés funkciók
+Cél: Összes tanult elem gyakorlása
 
-```bash
-ng e2e
-```
+9. lépés: Összefoglalás és Q&A (5 perc)
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Komponens vs Signal - mi mikor?
+Házi feladat kiadása
+Kérdések megválaszolása
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+### Házi feladat
