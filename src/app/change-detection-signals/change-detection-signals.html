@@ -1,0 +1,168 @@
+<div class="demo-container">
+  <h2>✨ Change Detection Demo - Signals</h2>
+  
+  <div class="info-box signals">
+    <p><strong>Modern megoldás:</strong> Angular Signals 🎉</p>
+    <p class="hint">
+      ✨ <strong>Signals:</strong> Reaktív, automatikusan frissül, nincs szükség immutable pattern-ekre!
+    </p>
+  </div>
+
+  <div class="stats">
+    <div class="stat-card">
+      <span class="stat-value">{{ completedCount() }}</span>
+      <span class="stat-label">Kész</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-value">{{ totalCount() - completedCount() }}</span>
+      <span class="stat-label">Hátra van</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-value">{{ totalCount() }}</span>
+      <span class="stat-label">Összes</span>
+    </div>
+  </div>
+
+  <div class="items-list">
+    <div class="list-header">
+      <h3>📋 Feladatok listája</h3>
+      <button class="btn btn-primary" (click)="addNewItem()">
+        ➕ Új feladat
+      </button>
+    </div>
+    
+    @for (item of items(); track item.id) {
+      <div 
+        class="item" 
+        [class.completed]="item.completed">
+        <span class="checkbox">{{ item.completed ? '✅' : '⬜' }}</span>
+        <span class="name">{{ item.name }}</span>
+        <span class="status">{{ item.completed ? 'Kész' : 'Folyamatban' }}</span>
+        
+        <div class="buttons">
+          <button 
+            class="btn btn-toggle"
+            (click)="toggleCompleted(item.id)">
+            🔄 Toggle
+          </button>
+          <button 
+            class="btn btn-delete"
+            (click)="removeItem(item.id)">
+            🗑️
+          </button>
+        </div>
+      </div>
+    } @empty {
+      <div class="empty-state">
+        <p>📭 Nincs feladat! Adj hozzá egyet a + gombbal.</p>
+      </div>
+    }
+  </div>
+
+  <div class="explanation-box signals-explanation">
+    <h4>✨ Miért jobb a Signal?</h4>
+    
+    <div class="benefits">
+      <div class="benefit">
+        <span class="benefit-icon">⚡</span>
+        <div>
+          <h5>Finom-granularitású reaktivitás</h5>
+          <p>Csak az a komponens frissül, ami ténylegesen használja a signal-t</p>
+        </div>
+      </div>
+      
+      <div class="benefit">
+        <span class="benefit-icon">🎯</span>
+        <div>
+          <h5>Egyszerűbb használat</h5>
+          <p>Nincs szükség immutable pattern-ekre vagy ChangeDetectorRef-re</p>
+        </div>
+      </div>
+      
+      <div class="benefit">
+        <span class="benefit-icon">🚀</span>
+        <div>
+          <h5>Jobb teljesítmény</h5>
+          <p>Angular tudja pontosan, hogy mi változott, nem kell mindent ellenőrizni</p>
+        </div>
+      </div>
+      
+      <div class="benefit">
+        <span class="benefit-icon">🔗</span>
+        <div>
+          <h5>Computed értékek</h5>
+          <p>A <code>completedCount</code> automatikusan frissül, ha az items változik</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="code-example">
+      <h5>🔍 Signal használata:</h5>
+      <pre><code>// Létrehozás
+items = signal&lt;Item[]&gt;([...]);
+
+// Olvasás (mint függvény!)
+const allItems = this.items();
+
+// Frissítés
+this.items.update(current => [...current, newItem]);
+
+// Computed
+completedCount = computed(() => 
+  this.items().filter(i => i.completed).length
+);</code></pre>
+    </div>
+  </div>
+
+  <div class="summary">
+    <h4>📊 Összehasonlítás</h4>
+    <table>
+      <thead>
+        <tr>
+          <th>Jellemző</th>
+          <th>Default</th>
+          <th>OnPush</th>
+          <th>Signals ✨</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Teljesítmény</td>
+          <td>❌ Lassú</td>
+          <td>✅ Gyors</td>
+          <td>✅✅ Leggyorsabb</td>
+        </tr>
+        <tr>
+          <td>Egyszerűség</td>
+          <td>✅ Egyszerű</td>
+          <td>❌ Bonyolult</td>
+          <td>✅✅ Nagyon egyszerű</td>
+        </tr>
+        <tr>
+          <td>Immutable pattern</td>
+          <td>❌ Nem kell</td>
+          <td>✅ KÖTELEZŐ</td>
+          <td>❌ Nem kell</td>
+        </tr>
+        <tr>
+          <td>Automatikus optimalizálás</td>
+          <td>❌</td>
+          <td>Részben</td>
+          <td>✅✅ Teljes</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="next-steps signals-next">
+    <h4>🎓 Mit tanultál?</h4>
+    <ul>
+      <li>✅ Default CD: Mindent ellenőriz, egyszerű de lassú</li>
+      <li>✅ OnPush CD: Gyors, de immutable pattern-t igényel</li>
+      <li>✅ Signals: A legjobb mindkét világból - gyors ÉS egyszerű!</li>
+    </ul>
+    <p class="recommendation">
+      💡 <strong>Ajánlás:</strong> Új Angular alkalmazásokban használj Signal-okat!
+    </p>
+  </div>
+</div>

@@ -1,0 +1,235 @@
+<div class="demo-container">
+  <h2>📡 Change Detection Demo - Observable + BehaviorSubject</h2>
+
+  <div class="info-box observable">
+    <div class="strategy-header">
+      <div>
+        <p><strong>Stratégia:</strong> {{ getCurrentStrategy() }}</p>
+        <p class="hint">📡 <strong>BehaviorSubject + Async Pipe!</strong></p>
+        <p class="hint">⚠️ De még mindig kell immutable pattern OnPush child-hoz!</p>
+      </div>
+      <div class="parent-counter">
+        <div class="render-badge">🔄 Parent újra renderelve: {{ renderCount }}x</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="test-buttons">
+    <h3>🧪 Teszteld az Observable-t!</h3>
+    <p><strong>Figyeld meg az első item-et</strong> (Tanulás Angular-ból):</p>
+    <div class="button-group">
+      <button class="btn btn-danger" (click)="mutateItem()">
+        ❌ Mutáció + Observable emit (NEM frissül)
+      </button>
+      <button class="btn btn-success" (click)="updateImmutable()">
+        ✅ Immutable + Observable emit (frissül)
+      </button>
+    </div>
+    <p class="note">👉 Nyisd meg a konzolt (F12) és figyeld a változásokat!</p>
+  </div>
+
+  @if (items$ | async; as items) {
+  <app-item-list [items]="items" />
+  }
+
+  <div class="explanation-box observable-explanation">
+    <h4>📡 Mi történik Observable-lel?</h4>
+    <p>
+      A <code>BehaviorSubject</code> egy reaktív Observable, és az <code>async</code> pipe
+      automatikusan subscribe-ol rá és továbbítja az értéket a child komponensnek.
+    </p>
+
+    <div class="key-insight">
+      <h5>💡 Kulcs megértés:</h5>
+      <p>
+        ❌ <strong>Mutáció + Observable:</strong><br />
+        - BehaviorSubject.next() emit-el<br />
+        - Async pipe megkapja az értéket<br />
+        - <strong>DE</strong> a tömb referenciája azonos<br />
+        - → Child OnPush <strong>NEM frissül</strong>!<br />
+        - <strong>Observable sem varázs - kell immutable pattern!</strong>
+      </p>
+      <p>
+        ✅ <strong>Immutable + Observable:</strong><br />
+        - BehaviorSubject.next() emit-el ÚJ tömböt<br />
+        - Async pipe továbbítja az ÚJ referenciát<br />
+        - → Child OnPush <strong>frissül</strong>!<br />
+        - <strong>Observable + immutable = reaktív és hatékony!</strong>
+      </p>
+    </div>
+
+    <div class="code-example">
+      <h5>🔍 BehaviorSubject használata:</h5>
+      <pre><code>// BehaviorSubject létrehozása
+private itemsSubject = new BehaviorSubject&lt;Item[]&gt;([...]);
+items$ = this.itemsSubject.asObservable();
+
+// Template-ben: async pipe
+&#64;if (items$ | async; as items) &#123;
+  &lt;app-item-list [items]="items" /&gt;
+&#125;
+
+// ❌ Mutáció - NEM működik
+mutateItem() &#123;
+  const items = this.itemsSubject.value;
+  items[0].completed = !items[0].completed;
+  this.itemsSubject.next(items); // Azonos referencia!
+&#125;
+
+// ✅ Immutable - működik
+updateImmutable() &#123;
+  const newItems = this.itemsSubject.value.map(...);
+  this.itemsSubject.next(newItems); // ÚJ referencia!
+&#125;</code></pre>
+    </div>
+
+    <p class="warning">
+      ⚠️ <strong>Fontos:</strong> Az Observable és async pipe önmagukban NEM oldják meg az OnPush
+      problémáját - még mindig kell immutable pattern!
+    </p>
+  </div>
+
+  <details class="comparison-details" open>
+    <summary>📊 Observable vs BehaviorSubject - Különbségek</summary>
+
+    <div class="comparison-content">
+      <h5>🤔 Mi a különbség?</h5>
+
+      <div class="comparison-grid">
+        <div class="comparison-card observable-card">
+          <h6>📡 Observable</h6>
+          <ul>
+            <li>✅ <strong>Általános</strong> reaktív stream</li>
+            <li>❌ <strong>Nincs kezdőérték</strong></li>
+            <li>❌ Subscribe után <strong>nem ad értéket</strong> azonnal</li>
+            <li>✅ Cold: minden subscribe új execution-t indít</li>
+            <li>✅ Példa: HTTP kérések, események</li>
+          </ul>
+          <div class="code-snippet">
+            <pre><code>const obs$ = new Observable(subscriber => &#123;
+  subscriber.next('érték');
+&#125;);
+
+// Subscriber nem kap azonnal értéket!
+obs$.subscribe(val => console.log(val));</code></pre>
+          </div>
+        </div>
+
+        <div class="comparison-card subject-card">
+          <h6>🎯 BehaviorSubject</h6>
+          <ul>
+            <li>✅ <strong>Observable + State</strong></li>
+            <li>✅ <strong>Van kezdőérték</strong></li>
+            <li>✅ Subscribe után <strong>azonnal ad értéket</strong></li>
+            <li>✅ Hot: minden subscriber ugyanazt az execution-t látja</li>
+            <li>✅ <code>.value</code> - aktuális érték lekérése</li>
+            <li>✅ Példa: State management, cache</li>
+          </ul>
+          <div class="code-snippet">
+            <pre><code>const subject = new BehaviorSubject('kezdő');
+
+// Subscriber AZONNAL megkapja a 'kezdő' értéket!
+subject.subscribe(val => console.log(val));
+
+subject.next('új érték'); // Minden subscriber értesül</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="when-to-use">
+        <h6>🎯 Mikor melyiket használd?</h6>
+        <table>
+          <thead>
+            <tr>
+              <th>Használati eset</th>
+              <th>Observable</th>
+              <th>BehaviorSubject</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>HTTP kérés (egyszeri adat)</td>
+              <td class="recommended">✅ Ajánlott</td>
+              <td>❌</td>
+            </tr>
+            <tr>
+              <td>Event stream (click, input, websocket)</td>
+              <td class="recommended">✅ Ajánlott</td>
+              <td>❌</td>
+            </tr>
+            <tr>
+              <td>Nincs kezdőérték</td>
+              <td class="recommended">✅ Observable</td>
+              <td>❌</td>
+            </tr>
+            <tr>
+              <td>State management (alkalmazás állapot)</td>
+              <td>❌</td>
+              <td class="recommended">✅ Ajánlott</td>
+            </tr>
+            <tr>
+              <td>Cache (kezdőértékkel)</td>
+              <td>❌</td>
+              <td class="recommended">✅ Ajánlott</td>
+            </tr>
+            <tr>
+              <td>Aktuális érték lekérése (.value)</td>
+              <td>❌</td>
+              <td class="recommended">✅ Ajánlott</td>
+            </tr>
+            <tr>
+              <td>Új subscriber azonnal kapjon értéket</td>
+              <td>❌</td>
+              <td class="recommended">✅ Ajánlott</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="practical-examples">
+        <h6>💼 Gyakorlati példák:</h6>
+        <div class="example-grid">
+          <div class="example-item">
+            <strong>� Observable használat:</strong>
+            <ul>
+              <li>HTTP GET kérés (<code>http.get()</code>)</li>
+              <li>Button click események</li>
+              <li>Form input változások</li>
+              <li>WebSocket üzenetek</li>
+              <li>Timer, interval események</li>
+            </ul>
+          </div>
+          <div class="example-item">
+            <strong>🎯 BehaviorSubject használat:</strong>
+            <ul>
+              <li>User authentication state</li>
+              <li>Shopping cart tartalma</li>
+              <li>Kiválasztott nyelv/téma</li>
+              <li>Globális loading state</li>
+              <li>Aktuális felhasználó adatai</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="key-takeaway">
+        <strong>📌 Összefoglalás:</strong>
+        <br />
+        Az <strong>Observable</strong> egy stream, amely idővel érkezhet adatokkal.
+        <br />
+        A <strong>BehaviorSubject</strong> egy state container, amely mindig tartalmaz egy aktuális
+        értéket. <br /><br />
+        <strong>Ebben a demo-ban:</strong> BehaviorSubject-et használunk, mert
+        <strong>state-et</strong> kezelünk (items lista).
+      </div>
+    </div>
+  </details>
+
+  <div class="next-steps">
+    <h4>🔜 Következő lépés: Signals!</h4>
+    <p>
+      A Signal API megoldja mindezt egyszerűbben - automatikus reaktivitás, 
+      nincs szükség subscribe-ra, és sokkal könnyebb használni!
+    </p>
+  </div>
+</div>
