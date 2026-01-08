@@ -1,9 +1,9 @@
 import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { UserFormComponent } from '../user-form/user-form';
-import { User, CreateUserDto } from '../../models/user.model';
+import { User, CreateUserDto, UpdateUserDto } from '../../models/user.model';
 
-type ViewMode = 'list' | 'create';
+type ViewMode = 'list' | 'create' | 'edit';
 
 @Component({
   selector: 'app-user-management',
@@ -17,6 +17,7 @@ export class UserManagementComponent {
 
   // Állapotok signal-ként
   users = signal<User[]>([]);
+  selectedUser = signal<User | null>(null);
   viewMode = signal<ViewMode>('list');
   loading = signal(false);
   error = signal<string | null>(null);
@@ -64,7 +65,39 @@ export class UserManagementComponent {
     });
   }
 
+  editUser(user: User) {
+    this.selectedUser.set(user);
+    this.viewMode.set('edit');
+  }
+
+  updateUser(changes: CreateUserDto) {
+    const user = this.selectedUser();
+    if (!user) return;
+
+    this.loading.set(true);
+
+    const updateData: UpdateUserDto = changes;
+
+    this.userService.update(user.id, updateData).subscribe({
+      next: (updatedUser) => {
+        // Frissítjük a listában az adott usert
+        this.users.update(current =>
+          current.map(u => u.id === updatedUser.id ? updatedUser : u)
+        );
+        this.selectedUser.set(null);
+        this.viewMode.set('list');
+        this.loading.set(false);
+      },
+      error: (err) => {
+        this.error.set('Hiba történt a felhasználó módosításakor');
+        this.loading.set(false);
+        console.error(err);
+      }
+    });
+  }
+
   cancelForm() {
+    this.selectedUser.set(null);
     this.viewMode.set('list');
   }
 }
