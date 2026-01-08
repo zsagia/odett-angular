@@ -4,15 +4,17 @@ import { ChangeDetectionDemo } from './change-detection-demo/change-detection-de
 import { ChangeDetectionOnPush } from './change-detection-onpush/change-detection-onpush';
 import { ChangeDetectionObservable } from './change-detection-observable/change-detection-observable';
 import { ChangeDetectionSignals } from './change-detection-signals/change-detection-signals';
+import { UserManagementComponent } from './components/user-management/user-management';
 
 @Component({
   selector: 'app-root',
   imports: [
-    RouterOutlet, 
+    RouterOutlet,
     ChangeDetectionDemo,
     ChangeDetectionOnPush,
     ChangeDetectionObservable,
-    ChangeDetectionSignals
+    ChangeDetectionSignals,
+    UserManagementComponent
   ],
   templateUrl: './app.html',
   styleUrl: './app.css'
