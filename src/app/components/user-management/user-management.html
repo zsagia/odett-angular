@@ -48,8 +48,9 @@
                   {{ user.role }}
                 </span>
               </td>
-              <td>
+              <td class="actions">
                 <button class="btn-edit" (click)="editUser(user)">Szerkesztés</button>
+                <button class="btn-delete" (click)="deleteUser(user)">Törlés</button>
               </td>
             </tr>
           }

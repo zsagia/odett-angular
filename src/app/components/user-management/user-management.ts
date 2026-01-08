@@ -96,6 +96,28 @@ export class UserManagementComponent {
     });
   }
 
+  deleteUser(user: User) {
+    if (!confirm(`Biztosan törölni szeretnéd: ${user.name}?`)) {
+      return;
+    }
+
+    this.loading.set(true);
+
+    this.userService.delete(user.id).subscribe({
+      next: () => {
+        this.users.update(current =>
+          current.filter(u => u.id !== user.id)
+        );
+        this.loading.set(false);
+      },
+      error: (err) => {
+        this.error.set('Hiba történt a törlés során');
+        this.loading.set(false);
+        console.error(err);
+      }
+    });
+  }
+
   cancelForm() {
     this.selectedUser.set(null);
     this.viewMode.set('list');

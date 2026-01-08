@@ -57,6 +57,24 @@
   background-color: #0056b3;
 }
 
+.btn-delete {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-delete:hover {
+  background-color: #c82333;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
 .user-table {
   width: 100%;
   border-collapse: collapse;
