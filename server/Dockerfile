@@ -4,7 +4,7 @@ WORKDIR /app
 
 # Csak a szerver fájlokat másoljuk
 COPY server/package*.json ./
-RUN npm ci --only=production
+RUN npm install --omit=dev
 
 COPY server/websocket-server.js ./
 
