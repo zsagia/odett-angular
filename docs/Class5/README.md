@@ -7,6 +7,7 @@ Ez a gyakorlat egy valós idejű chat alkalmazást mutat be WebSocket technológ
 ### Dokumentáció
 - [01-websocket-elmelet.md](./01-websocket-elmelet.md) - Elméleti alapok
 - [02-websocket-technikai.md](./02-websocket-technikai.md) - Technikai dokumentáció
+- [03-deploy-guide.md](./03-deploy-guide.md) - Deploy útmutató (Firebase + Cloud Run)
 
 ### Szerver
 - `server/websocket-server.js` - Node.js WebSocket szerver
@@ -82,3 +83,23 @@ npm start
 3. **Angular Signals**: Reaktív állapotkezelés
 4. **Type Guards**: TypeScript típusbiztonság
 5. **Node.js ws**: Egyszerű WebSocket szerver
+
+## Production Deploy
+
+Az alkalmazás Firebase + Cloud Run segítségével deployolható:
+
+```
+Angular Frontend  →  Firebase Hosting
+WebSocket Server  →  Google Cloud Run
+```
+
+### GitHub Actions
+
+A `.github/workflows/deploy.yml` automatikusan deployol minden `main` branch push-ra.
+
+**Szükséges GitHub Secrets:**
+- `GCP_PROJECT_ID` - Google Cloud projekt ID
+- `GCP_SA_KEY` - Service account kulcs (JSON)
+- `FIREBASE_SERVICE_ACCOUNT` - Firebase service account (JSON)
+
+Részletes útmutató: [03-deploy-guide.md](./03-deploy-guide.md)

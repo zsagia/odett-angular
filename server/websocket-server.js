@@ -7,7 +7,8 @@
 
 const { WebSocketServer } = require('ws');
 
-const PORT = 3001;
+// Cloud Run a PORT env változót adja meg, lokálisan 3001
+const PORT = process.env.PORT || 3001;
 
 // WebSocket szerver létrehozása
 const wss = new WebSocketServer({ port: PORT });

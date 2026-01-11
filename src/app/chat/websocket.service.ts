@@ -3,8 +3,7 @@ import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { retry, catchError } from 'rxjs/operators';
 import { EMPTY, Subscription } from 'rxjs';
 import { ChatMessage, ConnectionStatus, WebSocketMessage, UsersMessage } from './chat.model';
-
-const WEBSOCKET_URL = 'ws://localhost:3001';
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class WebSocketService {
@@ -39,7 +38,7 @@ export class WebSocketService {
     this._currentUser.set(username);
 
     this.socket$ = webSocket<WebSocketMessage>({
-      url: WEBSOCKET_URL,
+      url: environment.websocketUrl,
       openObserver: {
         next: () => {
           console.log('WebSocket kapcsolat létrejött');
