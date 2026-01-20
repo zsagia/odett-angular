@@ -85,6 +85,26 @@ export class WebsocketExamComponent implements OnDestroy {
       this.log('Vizsga kapcsolat vége');
       this.isConnected.set(false);
     };
+
+    // Task 3: Üzenet fogadása és állapotkezelés
+    this.ws.onmessage = (event) => {
+      const message = event.data;
+
+      // Minden üzenetre először kiírjuk: "Szerver válasz: <üzenet>"
+      this.log(`Szerver válasz: ${message}`);
+
+      // 3/A: Ha "OK" jön, küldünk "START"-ot
+      if (message === 'OK') {
+        this.ws!.send('START');
+        this.log('Indítás elküldve');
+      }
+
+      // 3/B: Ha "Q:2+2" jön, küldünk "A:4"-et
+      if (message === 'Q:2+2') {
+        this.ws!.send('A:4');
+        this.log('Válasz elküldve: 4');
+      }
+    };
   }
 
   private log(message: string): void {
