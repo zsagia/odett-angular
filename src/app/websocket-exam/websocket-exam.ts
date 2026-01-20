@@ -104,6 +104,12 @@ export class WebsocketExamComponent implements OnDestroy {
         this.ws!.send('A:4');
         this.log('Válasz elküldve: 4');
       }
+
+      // Task 4: Ha "DONE" jön, kiírjuk a sikert és lezárjuk
+      if (message === 'DONE') {
+        this.log('Sikeres vizsga szimuláció');
+        this.ws!.close();
+      }
     };
   }
 
