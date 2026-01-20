@@ -8,7 +8,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "server": "json-server --watch db.json --port 3000",
-    "ws": "node server/websocket-server.js"
+    "ws": "node server/websocket-server.js",
+    "ws-feladat": "node server.js"
   },
   "prettier": {
     "printWidth": 100,
