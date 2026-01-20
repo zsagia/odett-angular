@@ -10,11 +10,6 @@ import { UserManagementComponent } from './components/user-management/user-manag
   selector: 'app-root',
   imports: [
     RouterOutlet,
-    ChangeDetectionDemo,
-    ChangeDetectionOnPush,
-    ChangeDetectionObservable,
-    ChangeDetectionSignals,
-    UserManagementComponent
   ],
   templateUrl: './app.html',
   styleUrl: './app.css'
