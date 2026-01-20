@@ -74,6 +74,10 @@ export class WebsocketExamComponent implements OnDestroy {
     this.ws.onopen = () => {
       this.log('Vizsga kapcsolat OK');
       this.isConnected.set(true);
+
+      // Task 2: Belépési token küldése
+      this.ws!.send('LOGIN:ABC123');
+      this.log('Token elküldve: ABC123');
     };
 
     // Task 1: onclose - "Vizsga kapcsolat vége"
