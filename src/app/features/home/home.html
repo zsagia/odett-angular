@@ -1,0 +1,16 @@
+<div class="home-container">
+  <div class="home-card">
+    <h1>Welcome!</h1>
+
+    @if (user()) {
+      <p class="user-info">Bejelentkezve: <strong>{{ user()?.name }}</strong></p>
+    }
+
+    <nav class="nav-links">
+      <a href="/chat">Chat</a>
+      <a href="/websocket-exam">WebSocket Exam</a>
+    </nav>
+
+    <button class="logout-btn" (click)="logout()">Kijelentkezes</button>
+  </div>
+</div>
