@@ -1,0 +1,57 @@
+<div class="login-container">
+  <div class="login-card">
+    <h1>Bejelentkezes</h1>
+
+    @if (error()) {
+      <div class="error-message" role="alert">
+        {{ error() }}
+      </div>
+    }
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="email">Email cim</label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          [class.invalid]="isFieldInvalid('email')"
+          autocomplete="email"
+        />
+        @if (isFieldInvalid('email')) {
+          <span class="field-error">{{ getFieldError('email') }}</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="password">Jelszo</label>
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          [class.invalid]="isFieldInvalid('password')"
+          autocomplete="current-password"
+        />
+        @if (isFieldInvalid('password')) {
+          <span class="field-error">{{ getFieldError('password') }}</span>
+        }
+      </div>
+
+      <button
+        type="submit"
+        class="submit-btn"
+        [disabled]="isLoading()"
+      >
+        @if (isLoading()) {
+          <span>Bejelentkezes...</span>
+        } @else {
+          <span>Bejelentkezes</span>
+        }
+      </button>
+    </form>
+
+    <p class="register-link">
+      Meg nincs fiokod? <a routerLink="/register">Regisztracio</a>
+    </p>
+  </div>
+</div>

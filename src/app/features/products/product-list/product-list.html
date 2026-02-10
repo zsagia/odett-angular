@@ -1,0 +1,64 @@
+<div class="products-container">
+  <div class="products-header">
+    <h1>Termékek</h1>
+    @if (canEdit()) {
+      <a routerLink="/products/new" class="btn-add">+ Új termék</a>
+    }
+  </div>
+
+  @if (isLoading()) {
+    <div class="loading">Betöltés...</div>
+  }
+
+  @if (error()) {
+    <div class="error">{{ error() }}</div>
+  }
+
+  @if (!isLoading() && products().length === 0) {
+    <div class="empty">Nincs még termék az adatbázisban.</div>
+  }
+
+  @if (products().length > 0) {
+    <table class="products-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Név</th>
+          <th>Kategória</th>
+          <th>Ár</th>
+          <th>Készlet</th>
+          <th>Aktív</th>
+          @if (canEdit()) {
+            <th>Műveletek</th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (product of products(); track product.id) {
+          <tr>
+            <td>{{ product.id }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.category || '-' }}</td>
+            <td>{{ product.price }} Ft</td>
+            <td>{{ product.stock }} db</td>
+            <td>
+              <span [class]="product.active ? 'badge-active' : 'badge-inactive'">
+                {{ product.active ? 'Igen' : 'Nem' }}
+              </span>
+            </td>
+            @if (canEdit()) {
+              <td class="actions">
+                <a [routerLink]="['/products', product.id, 'edit']" class="btn-edit">Szerkesztés</a>
+                <button (click)="deleteProduct(product.id)" class="btn-delete">Törlés</button>
+              </td>
+            }
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+
+  <div class="back-link">
+    <a routerLink="/home">Vissza a főoldalra</a>
+  </div>
+</div>

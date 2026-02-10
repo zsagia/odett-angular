@@ -1,0 +1,85 @@
+<div class="register-container">
+  <div class="register-card">
+    <h1>Regisztracio</h1>
+
+    @if (error()) {
+      <div class="error-message" role="alert">
+        {{ error() }}
+      </div>
+    }
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">Nev</label>
+        <input
+          type="text"
+          id="name"
+          formControlName="name"
+          [class.invalid]="isFieldInvalid('name')"
+          autocomplete="name"
+        />
+        @if (isFieldInvalid('name')) {
+          <span class="field-error">{{ getFieldError('name') }}</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email cim</label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          [class.invalid]="isFieldInvalid('email')"
+          autocomplete="email"
+        />
+        @if (isFieldInvalid('email')) {
+          <span class="field-error">{{ getFieldError('email') }}</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="password">Jelszo</label>
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          [class.invalid]="isFieldInvalid('password')"
+          autocomplete="new-password"
+        />
+        @if (isFieldInvalid('password')) {
+          <span class="field-error">{{ getFieldError('password') }}</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="password_confirmation">Jelszo megerositese</label>
+        <input
+          type="password"
+          id="password_confirmation"
+          formControlName="password_confirmation"
+          [class.invalid]="isFieldInvalid('password_confirmation')"
+          autocomplete="new-password"
+        />
+        @if (isFieldInvalid('password_confirmation')) {
+          <span class="field-error">{{ getFieldError('password_confirmation') }}</span>
+        }
+      </div>
+
+      <button
+        type="submit"
+        class="submit-btn"
+        [disabled]="isLoading()"
+      >
+        @if (isLoading()) {
+          <span>Regisztracio...</span>
+        } @else {
+          <span>Regisztracio</span>
+        }
+      </button>
+    </form>
+
+    <p class="login-link">
+      Mar van fiokod? <a routerLink="/login">Bejelentkezes</a>
+    </p>
+  </div>
+</div>

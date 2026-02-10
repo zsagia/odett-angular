@@ -1,0 +1,24 @@
+<div class="home-container">
+  <div class="home-card">
+    <h1>Welcome!</h1>
+
+    @if (user()) {
+      <p class="user-info">
+        Bejelentkezve: <strong>{{ user()?.name }}</strong>
+        <span class="role-badge">{{ user()?.role }}</span>
+      </p>
+    }
+
+    <nav class="nav-links">
+      @if (isAdmin()) {
+        <a routerLink="/users">Felhasználók</a>
+      }
+      @if (isEditorOrAdmin()) {
+        <a routerLink="/products">Termékek</a>
+      }
+      <a routerLink="/tutorial" class="btn-tutorial">JWT Órai anyag</a>
+    </nav>
+
+    <button class="logout-btn" (click)="logout()">Kijelentkezés</button>
+  </div>
+</div>

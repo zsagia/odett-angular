@@ -1,0 +1,34 @@
+<div class="form-container">
+  <div class="form-card">
+    <h1>Felhasználó szerkesztése</h1>
+
+    @if (error()) {
+      <div class="error-message">{{ error() }}</div>
+    }
+
+    <p class="user-email">{{ userEmail() }}</p>
+
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">Név</label>
+        <input type="text" id="name" formControlName="name" />
+      </div>
+
+      <div class="form-group">
+        <label for="role">Szerepkör</label>
+        <select id="role" formControlName="role">
+          <option value="USER">USER</option>
+          <option value="EDITOR">EDITOR</option>
+          <option value="ADMIN">ADMIN</option>
+        </select>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-submit" [disabled]="isLoading()">
+          {{ isLoading() ? 'Mentés...' : 'Mentés' }}
+        </button>
+        <a routerLink="/users" class="btn-cancel">Mégse</a>
+      </div>
+    </form>
+  </div>
+</div>

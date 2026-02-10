@@ -1,0 +1,99 @@
+<div class="tutorial-container">
+  <header class="tutorial-header">
+    <h1>JWT Autentikáció – Órai anyag</h1>
+    <p class="subtitle">Angular + Laravel Sanctum – lépésről lépésre</p>
+  </header>
+
+  <div class="tutorial-layout">
+    <div class="sidebar">
+      <nav class="step-nav">
+        @for (step of steps; track $index) {
+          <button
+            [class.active]="activeStep() === $index"
+            [class.side-client]="step.side === 'client'"
+            [class.side-server]="step.side === 'server'"
+            [class.side-both]="step.side === 'both'"
+            (click)="setActiveStep($index)"
+          >
+            <span class="step-number">{{ $index + 1 }}</span>
+            <span class="step-title">{{ step.title.substring(3) }}</span>
+          </button>
+        }
+      </nav>
+
+      <div class="demo-panel">
+        <h3 class="demo-panel-title">Lepes demok</h3>
+        @for (script of tutorialScripts; track script.id) {
+          <button class="btn-demo" (click)="launchDemo(script.id)">
+            <span class="demo-name">{{ script.name }}</span>
+          </button>
+        }
+      </div>
+
+      <div class="demo-panel">
+        <h3 class="demo-panel-title">Oldal demok</h3>
+        @for (script of pageScripts; track script.id) {
+          <button class="btn-demo btn-demo-page" (click)="launchDemo(script.id)">
+            <span class="demo-name">{{ script.name }}</span>
+          </button>
+        }
+      </div>
+    </div>
+
+    <main class="step-content">
+      <div class="step-header">
+        <h2>{{ steps[activeStep()].title }}</h2>
+        <span
+          class="side-badge"
+          [class.badge-client]="steps[activeStep()].side === 'client'"
+          [class.badge-server]="steps[activeStep()].side === 'server'"
+          [class.badge-both]="steps[activeStep()].side === 'both'"
+        >
+          {{ getSideBadge(steps[activeStep()].side) }}
+        </span>
+      </div>
+
+      <div class="step-body">
+        <div class="content-items">
+          @for (item of steps[activeStep()].contentItems; track $index) {
+            <div class="content-item">
+              <pre class="content-item-text">{{ item }}</pre>
+            </div>
+          }
+        </div>
+
+        @for (block of steps[activeStep()].codeBlocks; track block.label) {
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-label">{{ block.label }}</span>
+              <span class="code-lang">{{ block.language === 'php' ? 'PHP' : block.language === 'html' ? 'HTML' : 'TypeScript' }}</span>
+            </div>
+            <pre class="code-content"><code>{{ block.code }}</code></pre>
+          </div>
+        }
+      </div>
+
+      <div class="step-navigation">
+        <button
+          class="btn-nav btn-prev"
+          (click)="prevStep()"
+          [disabled]="activeStep() === 0"
+        >
+          Előző
+        </button>
+        <span class="step-indicator">{{ activeStep() + 1 }} / {{ steps.length }}</span>
+        <button
+          class="btn-nav btn-next"
+          (click)="nextStep()"
+          [disabled]="activeStep() === steps.length - 1"
+        >
+          Következő
+        </button>
+      </div>
+    </main>
+  </div>
+
+  <div class="back-link">
+    <a routerLink="/home">Vissza a főoldalra</a>
+  </div>
+</div>
