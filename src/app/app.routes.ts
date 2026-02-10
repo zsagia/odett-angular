@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/auth/guards/auth.guard';
 import { guestGuard } from './core/auth/guards/guest.guard';
+import { editorGuard } from './core/auth/guards/editor.guard';
 
 export const routes: Routes = [
   // Auth routes (csak vendegeknek)
@@ -21,15 +22,22 @@ export const routes: Routes = [
     loadComponent: () => import('./features/home/home').then(m => m.HomeComponent),
     canActivate: [authGuard]
   },
+
+  // Termekek
   {
-    path: 'chat',
-    loadComponent: () => import('./chat/chat').then(m => m.ChatComponent),
+    path: 'products',
+    loadComponent: () => import('./features/products/product-list/product-list').then(m => m.ProductListComponent),
     canActivate: [authGuard]
   },
   {
-    path: 'websocket-exam',
-    loadComponent: () => import('./websocket-exam/websocket-exam').then(m => m.WebsocketExamComponent),
-    canActivate: [authGuard]
+    path: 'products/new',
+    loadComponent: () => import('./features/products/product-form/product-form').then(m => m.ProductFormComponent),
+    canActivate: [authGuard, editorGuard]
+  },
+  {
+    path: 'products/:id/edit',
+    loadComponent: () => import('./features/products/product-form/product-form').then(m => m.ProductFormComponent),
+    canActivate: [authGuard, editorGuard]
   },
 
   // Default redirect

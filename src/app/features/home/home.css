@@ -25,6 +25,16 @@
   margin-bottom: 1.5rem;
 }
 
+.role-badge {
+  display: inline-block;
+  margin-left: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  background-color: #3b82f6;
+  color: white;
+  font-size: 0.75rem;
+  border-radius: 4px;
+}
+
 .nav-links {
   display: flex;
   flex-direction: column;

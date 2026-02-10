@@ -3,12 +3,14 @@
     <h1>Welcome!</h1>
 
     @if (user()) {
-      <p class="user-info">Bejelentkezve: <strong>{{ user()?.name }}</strong></p>
+      <p class="user-info">
+        Bejelentkezve: <strong>{{ user()?.name }}</strong>
+        <span class="role-badge">{{ user()?.role }}</span>
+      </p>
     }
 
     <nav class="nav-links">
-      <a href="/chat">Chat</a>
-      <a href="/websocket-exam">WebSocket Exam</a>
+      <a routerLink="/products">Termekek</a>
     </nav>
 
     <button class="logout-btn" (click)="logout()">Kijelentkezes</button>

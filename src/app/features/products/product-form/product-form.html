@@ -1,0 +1,94 @@
+<div class="form-container">
+  <div class="form-card">
+    <h1>{{ isEditMode() ? 'Termek szerkesztese' : 'Uj termek' }}</h1>
+
+    @if (error()) {
+      <div class="error-message">{{ error() }}</div>
+    }
+
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">Nev *</label>
+        <input
+          type="text"
+          id="name"
+          formControlName="name"
+          [class.invalid]="isFieldInvalid('name')"
+        />
+        @if (isFieldInvalid('name')) {
+          <span class="field-error">{{ getFieldError('name') }}</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="description">Leiras</label>
+        <textarea
+          id="description"
+          formControlName="description"
+          rows="3"
+        ></textarea>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="price">Ar (Ft) *</label>
+          <input
+            type="number"
+            id="price"
+            formControlName="price"
+            [class.invalid]="isFieldInvalid('price')"
+          />
+          @if (isFieldInvalid('price')) {
+            <span class="field-error">{{ getFieldError('price') }}</span>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="stock">Keszlet (db) *</label>
+          <input
+            type="number"
+            id="stock"
+            formControlName="stock"
+            [class.invalid]="isFieldInvalid('stock')"
+          />
+          @if (isFieldInvalid('stock')) {
+            <span class="field-error">{{ getFieldError('stock') }}</span>
+          }
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="category">Kategoria</label>
+        <input
+          type="text"
+          id="category"
+          formControlName="category"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="image_url">Kep URL</label>
+        <input
+          type="url"
+          id="image_url"
+          formControlName="image_url"
+          placeholder="https://example.com/image.jpg"
+        />
+      </div>
+
+      <div class="form-group checkbox-group">
+        <label>
+          <input type="checkbox" formControlName="active" />
+          Aktiv
+        </label>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-submit" [disabled]="isLoading()">
+          {{ isLoading() ? 'Mentes...' : (isEditMode() ? 'Mentes' : 'Letrehozas') }}
+        </button>
+        <a routerLink="/products" class="btn-cancel">Megse</a>
+      </div>
+    </form>
+  </div>
+</div>
