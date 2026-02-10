@@ -1,0 +1,50 @@
+<div class="users-container">
+  <div class="users-header">
+    <h1>Felhasználók</h1>
+  </div>
+
+  @if (isLoading()) {
+    <div class="loading">Betöltés...</div>
+  }
+
+  @if (error()) {
+    <div class="error">{{ error() }}</div>
+  }
+
+  @if (!isLoading() && users().length === 0) {
+    <div class="empty">Nincs felhasználó.</div>
+  }
+
+  @if (users().length > 0) {
+    <table class="users-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Név</th>
+          <th>Email</th>
+          <th>Szerepkör</th>
+          <th>Műveletek</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (user of users(); track user.id) {
+          <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+              <span [class]="getRoleBadgeClass(user.role)">{{ user.role }}</span>
+            </td>
+            <td>
+              <a [routerLink]="['/users', user.id, 'edit']" class="btn-edit">Szerkesztés</a>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+
+  <div class="back-link">
+    <a routerLink="/home">Vissza a főoldalra</a>
+  </div>
+</div>

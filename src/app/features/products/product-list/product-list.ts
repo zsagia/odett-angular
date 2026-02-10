@@ -29,7 +29,7 @@ export class ProductListComponent implements OnInit {
   }
 
   deleteProduct(id: number): void {
-    if (confirm('Biztosan torolni szeretned ezt a termeket?')) {
+    if (confirm('Biztosan törölni szeretnéd ezt a terméket?')) {
       this.productService.delete(id).subscribe();
     }
   }

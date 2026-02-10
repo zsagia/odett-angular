@@ -10,9 +10,15 @@
     }
 
     <nav class="nav-links">
-      <a routerLink="/products">Termekek</a>
+      @if (isAdmin()) {
+        <a routerLink="/users">Felhasználók</a>
+      }
+      @if (isEditorOrAdmin()) {
+        <a routerLink="/products">Termékek</a>
+      }
+      <a routerLink="/tutorial" class="btn-tutorial">JWT Órai anyag</a>
     </nav>
 
-    <button class="logout-btn" (click)="logout()">Kijelentkezes</button>
+    <button class="logout-btn" (click)="logout()">Kijelentkezés</button>
   </div>
 </div>

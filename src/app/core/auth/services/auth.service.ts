@@ -1,7 +1,7 @@
 import { Injectable, inject, signal, computed } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, tap, catchError, of, switchMap, throwError } from 'rxjs';
+import { Observable, tap, catchError, of, switchMap, throwError, firstValueFrom } from 'rxjs';
 import { TokenStorageService } from './token-storage.service';
 import {
   AuthUser,
@@ -35,6 +35,23 @@ export class AuthService {
 
   // Refresh token folyamatban flag
   private isRefreshing = false;
+
+  /**
+   * App indulaskor megnezi van-e refresh token a localStorage-ban.
+   * Ha igen, megujitja a session-t (uj access token + user adat).
+   */
+  async initializeAuth(): Promise<void> {
+    const refreshToken = this.tokenStorage.getRefreshToken();
+    if (!refreshToken) {
+      return;
+    }
+
+    try {
+      await firstValueFrom(this.refreshToken());
+    } catch {
+      this.tokenStorage.clearTokens();
+    }
+  }
 
   /**
    * CSRF cookie lekerese a Sanctum-tol

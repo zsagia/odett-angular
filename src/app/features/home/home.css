@@ -55,6 +55,14 @@
   background-color: #2563eb;
 }
 
+.nav-links a.btn-tutorial {
+  background-color: #8b5cf6;
+}
+
+.nav-links a.btn-tutorial:hover {
+  background-color: #7c3aed;
+}
+
 .logout-btn {
   width: 100%;
   padding: 0.75rem;

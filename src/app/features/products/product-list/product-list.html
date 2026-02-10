@@ -1,13 +1,13 @@
 <div class="products-container">
   <div class="products-header">
-    <h1>Termekek</h1>
+    <h1>Termékek</h1>
     @if (canEdit()) {
-      <a routerLink="/products/new" class="btn-add">+ Uj termek</a>
+      <a routerLink="/products/new" class="btn-add">+ Új termék</a>
     }
   </div>
 
   @if (isLoading()) {
-    <div class="loading">Betoltes...</div>
+    <div class="loading">Betöltés...</div>
   }
 
   @if (error()) {
@@ -15,7 +15,7 @@
   }
 
   @if (!isLoading() && products().length === 0) {
-    <div class="empty">Nincs meg termek az adatbazisban.</div>
+    <div class="empty">Nincs még termék az adatbázisban.</div>
   }
 
   @if (products().length > 0) {
@@ -23,13 +23,13 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th>Nev</th>
-          <th>Kategoria</th>
-          <th>Ar</th>
-          <th>Keszlet</th>
-          <th>Aktiv</th>
+          <th>Név</th>
+          <th>Kategória</th>
+          <th>Ár</th>
+          <th>Készlet</th>
+          <th>Aktív</th>
           @if (canEdit()) {
-            <th>Muveletek</th>
+            <th>Műveletek</th>
           }
         </tr>
       </thead>
@@ -48,8 +48,8 @@
             </td>
             @if (canEdit()) {
               <td class="actions">
-                <a [routerLink]="['/products', product.id, 'edit']" class="btn-edit">Szerkesztes</a>
-                <button (click)="deleteProduct(product.id)" class="btn-delete">Torles</button>
+                <a [routerLink]="['/products', product.id, 'edit']" class="btn-edit">Szerkesztés</a>
+                <button (click)="deleteProduct(product.id)" class="btn-delete">Törlés</button>
               </td>
             }
           </tr>
@@ -59,6 +59,6 @@
   }
 
   <div class="back-link">
-    <a routerLink="/home">Vissza a fooldarra</a>
+    <a routerLink="/home">Vissza a főoldalra</a>
   </div>
 </div>

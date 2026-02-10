@@ -90,9 +90,9 @@ export class ProductFormComponent implements OnInit {
     const field = this.productForm.get(fieldName);
     if (!field || !field.errors) return '';
 
-    if (field.errors['required']) return 'Ez a mezo kotelezo.';
-    if (field.errors['maxlength']) return `Maximum ${field.errors['maxlength'].requiredLength} karakter engedetyezett.`;
-    if (field.errors['min']) return 'Az ertek nem lehet negativ.';
+    if (field.errors['required']) return 'Ez a mező kötelező.';
+    if (field.errors['maxlength']) return `Maximum ${field.errors['maxlength'].requiredLength} karakter engedélyezett.`;
+    if (field.errors['min']) return 'Az érték nem lehet negatív.';
 
     return '';
   }
