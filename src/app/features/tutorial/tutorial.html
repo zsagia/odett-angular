@@ -54,22 +54,93 @@
       </div>
 
       <div class="step-body">
-        <div class="content-items">
-          @for (item of steps[activeStep()].contentItems; track $index) {
-            <div class="content-item">
-              <pre class="content-item-text">{{ item }}</pre>
+        @if (steps[activeStep()].tabs; as tabs) {
+          @for (section of introSections(); track $index) {
+            <div class="section">
+              <div class="content-item">
+                <pre class="content-item-text">{{ section.content }}</pre>
+              </div>
             </div>
           }
-        </div>
 
-        @for (block of steps[activeStep()].codeBlocks; track block.label) {
-          <div class="code-block">
-            <div class="code-header">
-              <span class="code-label">{{ block.label }}</span>
-              <span class="code-lang">{{ block.language === 'php' ? 'PHP' : block.language === 'html' ? 'HTML' : 'TypeScript' }}</span>
-            </div>
-            <pre class="code-content"><code>{{ block.code }}</code></pre>
+          <div class="tab-nav" role="tablist">
+            @for (tab of tabs; track $index) {
+              <button
+                role="tab"
+                [attr.aria-selected]="activeTab() === $index"
+                [class.active]="activeTab() === $index"
+                (click)="setTab($index)"
+              >{{ tab.label }}</button>
+            }
           </div>
+
+          <div class="tab-panel" role="tabpanel">
+            @for (section of visibleSections(); track $index) {
+              <div class="section">
+                <div
+                  class="content-item"
+                  [class.has-label]="section.label"
+                  [class.label-defense]="section.labelType === 'defense'"
+                  [class.label-attack]="section.labelType === 'attack'"
+                  [class.label-info]="section.labelType === 'info'"
+                >
+                  @if (section.label) {
+                    <div class="content-label">{{ section.label }}</div>
+                  }
+                  <pre class="content-item-text">{{ section.content }}</pre>
+                </div>
+
+                @if (section.codeBlocks) {
+                  @for (block of section.codeBlocks; track block.label) {
+                    <div class="code-block">
+                      <div class="code-header">
+                        <span class="code-label">{{ block.label }}</span>
+                        <span class="code-lang">{{ block.language === 'php' ? 'PHP' : block.language === 'html' ? 'HTML' : 'TypeScript' }}</span>
+                      </div>
+                      <pre class="code-content"><code>{{ block.code }}</code></pre>
+                    </div>
+                  }
+                }
+
+                @if (section.diagramData) {
+                  <app-event-sequence [data]="section.diagramData" />
+                }
+              </div>
+            }
+          </div>
+        } @else {
+          @for (section of steps[activeStep()].sections; track $index) {
+            <div class="section">
+              <div
+                class="content-item"
+                [class.has-label]="section.label"
+                [class.label-defense]="section.labelType === 'defense'"
+                [class.label-attack]="section.labelType === 'attack'"
+                [class.label-info]="section.labelType === 'info'"
+              >
+                @if (section.label) {
+                  <div class="content-label">{{ section.label }}</div>
+                }
+                <pre class="content-item-text">{{ section.content }}</pre>
+              </div>
+
+              @if (section.codeBlocks) {
+                @for (block of section.codeBlocks; track block.label) {
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="code-label">{{ block.label }}</span>
+                      <span class="code-lang">{{ block.language === 'php' ? 'PHP' : block.language === 'html' ? 'HTML' : 'TypeScript' }}</span>
+                    </div>
+                    <pre class="code-content"><code>{{ block.code }}</code></pre>
+                  </div>
+                }
+              }
+
+              @if (section.diagramData) {
+                <app-event-sequence [data]="section.diagramData" />
+              }
+            </div>
+          }
         }
       </div>
 

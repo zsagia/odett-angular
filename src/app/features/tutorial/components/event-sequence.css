@@ -1,0 +1,19 @@
+.diagram-container {
+  width: 100%;
+  overflow-x: auto;
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 0.75rem;
+}
+
+.diagram-title {
+  margin: 0 0 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.diagram-svg {
+  display: block;
+}

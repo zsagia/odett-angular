@@ -1,0 +1,116 @@
+<div class="diagram-container">
+  @if (title()) {
+    <h3 class="diagram-title">{{ title() }}</h3>
+  }
+  <svg
+    [attr.width]="layout().width"
+    [attr.height]="layout().height"
+    [attr.viewBox]="viewBox()"
+    class="diagram-svg"
+  >
+    <defs>
+      <filter id="seq-shadow" x="-20%" y="-20%" width="140%" height="140%">
+        <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.15" />
+      </filter>
+      <marker
+        id="seq-arrow"
+        markerWidth="10"
+        markerHeight="7"
+        refX="9"
+        refY="3.5"
+        orient="auto"
+      >
+        <polygon points="0 0, 10 3.5, 0 7" fill="#475569" />
+      </marker>
+    </defs>
+
+    <!-- Participant headers -->
+    @for (participant of data().participants; track participant) {
+      <g [attr.transform]="'translate(' + getParticipantX(participant) + ', 30)'">
+        <rect
+          [attr.x]="-65"
+          y="0"
+          width="130"
+          height="36"
+          rx="4"
+          fill="#3b82f6"
+          filter="url(#seq-shadow)"
+        />
+        <text x="0" y="23" text-anchor="middle" fill="white" font-size="12" font-weight="600">
+          {{ truncateParticipant(participant) }}
+        </text>
+      </g>
+    }
+
+    <!-- Lifelines -->
+    @for (participant of data().participants; track participant) {
+      <line
+        [attr.x1]="getParticipantX(participant)"
+        y1="70"
+        [attr.x2]="getParticipantX(participant)"
+        [attr.y2]="layout().height - 20"
+        stroke="#cbd5e1"
+        stroke-width="2"
+        stroke-dasharray="6,4"
+      />
+    }
+
+    <!-- Events -->
+    @for (event of data().events; track event.id; let i = $index) {
+      <g [attr.transform]="'translate(0,' + getEventY(i) + ')'">
+        @if (event.target) {
+          <!-- Arrow between participants -->
+          <line
+            [attr.x1]="getParticipantX(event.source)"
+            y1="0"
+            [attr.x2]="getParticipantX(event.target)"
+            y2="0"
+            stroke="#475569"
+            stroke-width="2"
+            marker-end="url(#seq-arrow)"
+          />
+          <text
+            [attr.x]="getArrowLabelX(event.source, event.target)"
+            y="-8"
+            text-anchor="middle"
+            font-size="11"
+            fill="#1e293b"
+          >
+            {{ event.eventName }}
+          </text>
+        } @else {
+          <!-- Self event -->
+          <circle [attr.cx]="getParticipantX(event.source)" cy="0" r="6" fill="#10b981" />
+          <text
+            [attr.x]="getParticipantX(event.source) + 15"
+            y="4"
+            font-size="10"
+            fill="#1e293b"
+          >
+            {{ event.eventName }}
+          </text>
+        }
+
+        <!-- Event type badge -->
+        <rect
+          [attr.x]="getParticipantX(event.source) - 30"
+          y="8"
+          width="60"
+          height="16"
+          rx="3"
+          [attr.fill]="getEventTypeColor(event.type)"
+          opacity="0.2"
+        />
+        <text
+          [attr.x]="getParticipantX(event.source)"
+          y="20"
+          text-anchor="middle"
+          font-size="8"
+          [attr.fill]="getEventTypeColor(event.type)"
+        >
+          {{ event.type }}
+        </text>
+      </g>
+    }
+  </svg>
+</div>

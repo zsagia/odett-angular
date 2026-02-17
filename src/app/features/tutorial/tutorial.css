@@ -175,6 +175,48 @@
   padding: 0;
 }
 
+/* --- Labeled content cards --- */
+
+.content-item.has-label {
+  border-left: 4px solid #0284c7;
+  background-color: #ffffff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.content-item.label-defense {
+  border-left-color: #0284c7;
+}
+
+.content-item.label-attack {
+  border-left-color: #dc2626;
+}
+
+.content-item.label-info {
+  border-left-color: #16a34a;
+}
+
+.content-label {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #0f172a;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e2e8f0;
+  letter-spacing: 0.01em;
+}
+
+.label-defense .content-label {
+  color: #0369a1;
+}
+
+.label-attack .content-label {
+  color: #dc2626;
+}
+
+.label-info .content-label {
+  color: #166534;
+}
+
 /* --- Code block --- */
 
 .code-block {
@@ -221,6 +263,46 @@
 
 .code-content code {
   font-family: inherit;
+}
+
+/* --- Tab navigation --- */
+
+.tab-nav {
+  display: flex;
+  gap: 0.25rem;
+  border-bottom: 2px solid #e2e8f0;
+  margin-bottom: 1.25rem;
+}
+
+.tab-nav button {
+  padding: 0.5rem 1.1rem;
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #64748b;
+  cursor: pointer;
+  margin-bottom: -2px;
+  border-radius: 4px 4px 0 0;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.tab-nav button:hover {
+  color: #0369a1;
+  background-color: #f1f5f9;
+}
+
+.tab-nav button.active {
+  color: #0369a1;
+  border-bottom-color: #0284c7;
+  font-weight: 600;
+}
+
+.tab-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
 /* --- Demo panel --- */
